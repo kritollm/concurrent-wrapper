@@ -1,4 +1,4 @@
-function concurrentWrapper(maxConcurrent, fn) {
+function concurrentWrapper(maxConcurrent: number, fn: (...args) => Promise<any>) {
     let que = [];
     let concurrent = 0;
 

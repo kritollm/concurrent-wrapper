@@ -1,5 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 function concurrentWrapper(maxConcurrent, fn) {
     var que = [];
     var concurrent = 0;
@@ -33,4 +32,5 @@ function concurrentWrapper(maxConcurrent, fn) {
     };
 }
 exports.concurrentWrapper = concurrentWrapper;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = concurrentWrapper;
