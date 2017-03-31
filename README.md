@@ -8,11 +8,11 @@ Some api's have a limit on unhandled request.
 ## Usage
 
 ```bash
-$ npm install -S  concurrent-wrapper
+$ npm install -S concurrent-wrapper
 ```
 
 ```javascript
-// var retryWrapper = require(retry-wrapper).retryWrapper
+// var concurrentWrapper = require(concurrent-wrapper).concurrentWrapper;
 import { concurrentWrapper } from 'concurrent-wrapper';
 
 let myAsyncFunctionWithConcurrentLogic = concurrentWrapper(2, myAsyncFunction);
@@ -35,41 +35,48 @@ myAsyncFunctionWithConcurrentLogic(`https://unstable.com/api/findSomething?thing
 ## Example
 
 ```javascript
-import { retryWrapper } from 'retry-wrapper';
+import { concurrentWrapper } from 'concurrent-wrapper';
 
-let retry = {};
+let maxConcurrent = 3;
+// To log
+let parallelRequests = 0;
+
+function doSomething(r) {
+    console.log(r);
+}
 function simulateRequest(req) {
-    // --- To log retries ---
-    retry[req] = retry[req] || 0;
-    // ----------------------
 
     return new Promise((resolve, reject) => {
 
-        var random = Math.floor(Math.random() * 10);
+        var random = Math.floor(Math.random() * 20);
+        parallelRequests++;
+        // Log parallel requests
+        console.log('Requests in parallel', parallelRequests);
+
         // ---------------------------
         setTimeout(() => {
-            retry[req]++;
+            let requestInParallel = parallelRequests;
+            parallelRequests--;
             if (random < 7) {
-                return reject(`${req}, failed at try ${retry[req]}`);
+                return reject({ ok: false, req, requestInParallel });
             }
-            return resolve(req);
+            return resolve({ ok: true, req, requestInParallel });
         }, random);
     });
 }
+//Same callback as the default, just lower timeouts to avoid timeout exception from
+// jasmine
 
-let retryWrapped = retryWrapper(4, simulateRequest);
+let concurrentWrapped = concurrentWrapper(maxConcurrent, simulateRequest);
 let promises = [];
-
 for (let i = 0, l = 100; i < l; i++) {
-    // 
-    promises.push(retryWrapped(i)
-        .then(result => ({ error: null, result }))
-        .catch(error => ({ error, result: null }))
-    );
+    promises.push(concurrentWrapped(i)
+    // Catch so Promise.all(promises) isn't rejected if
+    // retry fails.
+    .catch(e => e));
 }
-
 Promise.all(promises)
     .then(res => {
-        // Do something with the array of results
+        res.forEach(r => doSomething(r));
     });
 ```# concurrent-wrapper
