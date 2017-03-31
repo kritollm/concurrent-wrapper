@@ -1,7 +1,7 @@
 {
-  "name": "retry-wrapper",
-  "version": "1.0.1",
-  "description": "Easily turn an async function returning a Promise with retry logic.",
+  "name": "concurrent-wrapper",
+  "version": "1.0.0",
+  "description": "Easily add logic to limit concurrent execution of any function returning a Promise.",
   "main": "index.js",
   "typing": "index.d.ts",
   "scripts": {
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kritollm/retry-wrapper.git"
+    "url": "git+https://github.com/kritollm/concurrent-wrapper.git"
   },
   "keywords": [
     "retry",
@@ -35,9 +35,9 @@
   "author": "Kristian Mørch",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/kritollm/retry-wrapper/issues"
+    "url": "https://github.com/kritollm/concurrent-wrapper/issues"
   },
-  "homepage": "https://github.com/kritollm/retry-wrapper#readme",
+  "homepage": "https://github.com/kritollm/concurrent-wrapper#readme",
   "devDependencies": {
     "@types/jest": "^19.2.2",
     "np": "^2.13.1",
