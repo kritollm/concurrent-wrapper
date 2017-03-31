@@ -15,7 +15,7 @@
     "url": "git+https://github.com/kritollm/concurrent-wrapper.git"
   },
   "keywords": [
-    "retry",
+    "concurrent",
     "wrapper",
     "async",
     "Promise",

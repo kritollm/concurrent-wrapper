@@ -15,12 +15,12 @@ $ npm install -S concurrent-wrapper
 // var concurrentWrapper = require(concurrent-wrapper).concurrentWrapper;
 import { concurrentWrapper } from 'concurrent-wrapper';
 
-let myAsyncFunctionWithConcurrentLogic = concurrentWrapper(2, myAsyncFunction);
+let withConcurrentLogic = concurrentWrapper(2, myAsyncFunction);
 
 let params = ["something", "somethingelse", "andanotherthing", "whattotype"]
 
 params.forEach(p=>{
-myAsyncFunctionWithConcurrentLogic(`https://unstable.com/api/findSomething?thing=${p}`)
+withConcurrentLogic(`https://unstable.com/api/findSomething?thing=${p}`)
     .then(r => {
         //..Do something with result
     })
@@ -31,6 +31,9 @@ myAsyncFunctionWithConcurrentLogic(`https://unstable.com/api/findSomething?thing
 })
 
 ```
+## If my function doesn't return a Promise, am I doomed to live a life in callback hell making spaghetti code?
+
+Fear not, you can use [this](https://www.npmjs.com/package/cb-topromise-wrapper).
 
 ## Example
 
@@ -64,8 +67,6 @@ function simulateRequest(req) {
         }, random);
     });
 }
-//Same callback as the default, just lower timeouts to avoid timeout exception from
-// jasmine
 
 let concurrentWrapped = concurrentWrapper(maxConcurrent, simulateRequest);
 let promises = [];
@@ -95,10 +96,10 @@ import { concurrentWrapper } from 'concurrent-wrapper';
 import { retryWrapper } from 'retry-wrapper';
 
 // random order of execution
-let retryAndConcurrentWrapped = retryWrapper(5, concurrentWrapper(5, myRequestFunction));
+let retryAndConcurrent = retryWrapper(5, concurrentWrapper(5, myRequestFunction));
 // synced order of execution
-//let retryAndConcurrentWrapped = concurrentWrapper(5, retryWrapper(5, myRequestFunction));
+//let retryAndConcurrent = concurrentWrapper(5, retryWrapper(5, myRequestFunction));
 for (let i = 0, l = 1000; i < l; i++) {
-    retryAndConcurrentWrapped(i).then(console.log.bind(console)).catch(console.error.bind(console))
+    retryAndConcurrent(i).then(console.log.bind(console)).catch(console.error.bind(console))
   }
 ```
