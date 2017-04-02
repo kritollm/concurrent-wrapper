@@ -1,6 +1,6 @@
 {
   "name": "concurrent-wrapper",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Easily add logic to limit concurrent execution of any function returning a Promise.",
   "main": "index.js",
   "typing": "index.d.ts",
