@@ -2,7 +2,14 @@
 // it can't handle async code and promises is more important than productivity :)
 
 import { concurrentWrapper } from '.';
-
+function doSomething(r) {
+    console.log(r);
+    return r;
+}
+let promises = [];
+Promise.all(promises)
+    .then(res => res
+        .map(r => doSomething(r)));
 test('concurrent-wrapper', done => {
     let maxConcurrent = 3;
     let parallelRequests = 0;

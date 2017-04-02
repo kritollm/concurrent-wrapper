@@ -7,13 +7,16 @@
   "scripts": {
     "build": "tsc -p .",
     "test": "jest",
-    "prepublish": "npm run build",
     "release": "np"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kritollm/concurrent-wrapper.git"
   },
+  "files": [
+    "index.js",
+    "index.d.ts"
+  ],
   "keywords": [
     "concurrent",
     "wrapper",
